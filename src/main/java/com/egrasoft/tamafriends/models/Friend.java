@@ -1,45 +1,55 @@
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+package com.egrasoft.tamafriends.models;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "friends")
 public class Friend {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column
     private String name;
+
     @Column
     private int health;
+
     @Column
     private int hunger;
+
     @Column
     private int cleanliness;
+
     @Column
     private int bowels;
-    @Id
-    @Column
-    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Friend() {
     }
 
-    public Friend(String name, int health, int hunger, int cleanliness, int bowels) {
+    public Friend(String name, int health, int hunger, int cleanliness, int bowels, User user) {
         this.name = name;
         this.health = health;
         this.hunger = hunger;
         this.cleanliness = cleanliness;
         this.bowels = bowels;
+        this.user = user;
     }
 
-    public Friend(String name, int health, int hunger, int cleanliness, int bowels, Long id) {
-        this.name = name;
-        this.health = health;
-        this.hunger = hunger;
-        this.cleanliness = cleanliness;
-        this.bowels = bowels;
+    public Friend(Long id, String name, int health, int hunger, int cleanliness, int bowels, User user) {
         this.id = id;
+        this.name = name;
+        this.health = health;
+        this.hunger = hunger;
+        this.cleanliness = cleanliness;
+        this.bowels = bowels;
+        this.user = user;
     }
-
-
-
 
     public String getName() {
         return name;
@@ -88,5 +98,14 @@ public class Friend {
 
     public Long getId() {
         return id;
+    }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
